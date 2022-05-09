@@ -1,38 +1,24 @@
-# This is a basic workflow to help you get started with Actions
+name: Package exe with PyInstaller - Windows
 
-name: Build Releases
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build-windows:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
+  build:
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: PyInstaller Windows
-        uses: JackMcKew/pyinstaller-action-windows@v0.1.2
-  
-  build-linux:
-    
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: PyInstaller Linux
-        uses: JackMcKew/pyinstaller-action-linux@0.1.4
-      - name: Create Linux Releases
-        uses: ncipollo/release-action@v1.10.0
-        with:
-          tag: release
+    - uses: actions/checkout@v2
+    - name: PyInstaller Windows
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        path: src
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-exe
+        path: dist/windows
