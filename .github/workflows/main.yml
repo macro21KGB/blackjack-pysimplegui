@@ -1,6 +1,8 @@
 name: Build GUI exe with Pyinstaller
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       tags:
@@ -12,13 +14,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Package Application
-      uses: JackMcKew/pyinstaller-action-linux@main
+    
+    - uses: actions/setup-python@v3
       with:
-        path: src
+        python-version: '3.10' 
+
+    -run: pip3 install pyinstaller
+    -run: pyinstaller --onefile --noconsole --distpath=dist/linux src/app.py
+
 
     - uses: actions/upload-artifact@v2
       with:
         name: my-app
         path: dist/linux
+
+    
+  
