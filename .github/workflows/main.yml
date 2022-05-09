@@ -32,4 +32,5 @@ jobs:
     steps:
       - name: PyInstaller Linux
         uses: JackMcKew/pyinstaller-action-linux@0.1.4
-  
+      - name: Create Linux Releases
+        uses: ncipollo/release-action@v1.10.0
