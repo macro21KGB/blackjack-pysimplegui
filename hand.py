@@ -5,11 +5,13 @@ class Hand:
         self.cards : list[Card] = []
         self.hiddenCard : Card = None
 
-    def add_card(self, card, hidden=False):
+    def add_card(self, card : Card, hidden=False):
         if hidden:
             self.hiddenCard = card
-        else:
-            self.cards.append(card)
+            return
+        if card.get_points() == 11 and self.get_hand_points() > 21:
+            card.set_points(1)
+        self.cards.append(card)
 
     def get_cards(self):
         return self.cards
